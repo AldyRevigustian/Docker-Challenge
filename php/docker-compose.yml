@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+    laravel:
+        image: laravel-php
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: laravel-container
+        volumes:
+            - ./.env:/var/www/html/.env
+
+    nginx:
+        image: nginx:alpine
+        container_name: nginx
+        ports:
+            - "8282:8282"
+        volumes:
+            - ./nginx.conf:/etc/nginx/conf.d/default.conf
+        depends_on:
+            - laravel
